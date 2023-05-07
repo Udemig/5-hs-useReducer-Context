@@ -10,8 +10,14 @@ export function CartProvider({ children }) {
 
   // sepete ürün ekleme
   const addToCart = (product) => {
-    setItems([...items, product]);
+    const foundItem = items.find((item) => item.id === product.id);
+    if (foundItem) {
+      foundItem.amount++;
+    } else {
+      setItems([...items, { ...product, amount: 1 }]);
+    }
   };
+
   return (
     <CartContext.Provider value={{ items, addToCart }}>
       {children}
